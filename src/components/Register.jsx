@@ -3,6 +3,7 @@ import Layout from "../Layout.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "./ActivityList.css";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [value, setValue] = useState({
@@ -23,12 +24,18 @@ const Register = () => {
     });
   };
 
-  
+  const navigate = useNavigate();
 
   const register = async (value) =>
-    await axios.post("https://infinityfitbackenddev.onrender.com" + "/register", value, {headers: {
-      'Content-Type': 'application/json',
-    }});
+    await axios.post(
+      "https://infinityfitbackenddev.onrender.com" + "/register",
+      value,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,10 +48,11 @@ const Register = () => {
         .then((res) => {
           console.log(res.data);
           toast.success(res.data);
+          navigate("/");
         })
         .catch((err) => {
           // console.log(err.response.data);
-          // toast.error(err.response.data);          
+          // toast.error(err.response.data);
           console.log(err);
           toast.error(err.response);
         });

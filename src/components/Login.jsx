@@ -1,20 +1,16 @@
 import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from "../Layout.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./ActivityForm.css";
 
 const Login = () => {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [value, setValue] = useState({
-    username: "",
-    password: "",
+    userEmail: "",
+    userPassword: "",
   });
-
-  // const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setValue({
@@ -24,36 +20,24 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    // setLoading(true);
     e.preventDefault();
-    // console.log(value);
 
     const logining = async (value) =>
       await axios
-        .post("https://infinityfitbackenddev.onrender.com" + "/login/", value)
+        .post("https://infinityfitbackenddev.onrender.com" + "/login", value, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((res) => {
-          // setLoading(false);
-          // toast.info(res.data.payload.user.username + " Login Success");
-          // res.json(res.data.payload.user.username + " Login Success");
-          // dispatch({
-            //   type: "LOGIN",
-            //   payload: {
-              //     token: res.data.token,
-              //     username: res.data.payload.user.username,
-              //     role: res.data.payload.user.role,
-              //   },
-              // });
-              console.log(req);
-              localStorage.setItem("token", res.data.token);
-          // roleBaseRedirect(res.data.payload.user.role);
+          navigate("/");
+          localStorage.setItem("token", res.data.token);
         })
         .catch((err) => {
-          // setLoading(false);
           console.log(err.response.data);
           toast.error(err.response.data);
         });
-  logining()
-
+    logining(value);
   };
 
   return (
@@ -63,10 +47,10 @@ const Login = () => {
           <h1>Login Page</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Username</label>
+              <label>User Email</label>
               <input
                 type="text"
-                name="username"
+                name="userEmail"
                 onChange={handleChange}
                 className="form-control"
               />
@@ -75,7 +59,7 @@ const Login = () => {
               <label>Password</label>
               <input
                 type="text"
-                name="password"
+                name="userPassword"
                 onChange={handleChange}
                 className="form-control"
               />
