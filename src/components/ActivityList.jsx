@@ -11,8 +11,8 @@ function ActivityList() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    getDataFromAPI();
-    // currentUser(userID);
+    // getDataFromAPI();
+    currentUser(userID);
   }, []);
 
   const VURI = "https://infinityfitbackenddev.onrender.com";
@@ -32,10 +32,10 @@ function ActivityList() {
   };
 
   let idtoken = localStorage.getItem("token")
-  console.log(idtoken);
+  // console.log(idtoken);
   if (idtoken) {
     const decoded = jwt_decode(idtoken);
-    const userID = decoded.user.userID;
+    var userID = decoded.user.userID;
     var userEmail = decoded.user.userEmail
     console.log(userEmail);
   }
